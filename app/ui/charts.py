@@ -2,18 +2,35 @@ from typing import Any, Dict, List, Optional
 import plotly.graph_objects as go
 import pandas as pd
 
-# Color tokens mapping
-COLORS = {
+# Design tokens palette per DESIGN.md §3
+DARK_TOKENS = {
+    "bg": "#0B1220",
+    "surface": "#111A2E",
+    "surface_2": "#16223B",
+    "border": "#22304F",
+    "text": "#E6EDF7",
+    "text_muted": "#8FA1BF",
     "primary": "#2DD4BF",
     "accent": "#818CF8",
     "ok": "#34D399",
     "warn": "#FBBF24",
     "critical": "#F87171",
     "info": "#60A5FA",
-    "surface": "#111A2E",
-    "border": "#22304F",
-    "text": "#E6EDF7",
-    "text_muted": "#8FA1BF",
+}
+
+LIGHT_TOKENS = {
+    "bg": "#F4F7FB",
+    "surface": "#FFFFFF",
+    "surface_2": "#EEF2F9",
+    "border": "#D9E1EF",
+    "text": "#0F172A",
+    "text_muted": "#5B6B88",
+    "primary": "#0D9488",
+    "accent": "#4F46E5",
+    "ok": "#059669",
+    "warn": "#B45309",
+    "critical": "#DC2626",
+    "info": "#2563EB",
 }
 
 def create_timeseries_figure(
@@ -24,21 +41,22 @@ def create_timeseries_figure(
     theme: str = "dark"
 ) -> go.Figure:
     """
-    Main time-series chart with threshold band and anomaly markers (DESIGN.md §2).
+    Main time-series chart with threshold band and anomaly markers (DESIGN.md §2 & §3).
     """
+    t = LIGHT_TOKENS if theme == "light" else DARK_TOKENS
     fig = go.Figure()
 
     if not series_data:
         fig.update_layout(
-            template="plotly_dark" if theme == "dark" else "plotly_white",
+            template="plotly_white" if theme == "light" else "plotly_dark",
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             annotations=[{
-                "text": "No data available in this time range",
+                "text": "No data points recorded up to current simulation clock",
                 "xref": "paper",
                 "yref": "paper",
                 "showarrow": False,
-                "font": {"size": 14, "color": COLORS["text_muted"]}
+                "font": {"size": 14, "color": t["text_muted"]}
             }]
         )
         return fig
@@ -53,7 +71,7 @@ def create_timeseries_figure(
         y=df["value"],
         mode="lines",
         name=sensor_id,
-        line={"color": COLORS["primary"], "width": 2},
+        line={"color": t["primary"], "width": 2.2},
         connectgaps=False,
     ))
 
@@ -65,17 +83,19 @@ def create_timeseries_figure(
         fig.add_hline(
             y=low,
             line_dash="dash",
-            line_color=COLORS["warn"],
+            line_color=t["warn"],
             annotation_text=f"p1 ({low:.1f})",
-            annotation_position="bottom right"
+            annotation_position="bottom right",
+            annotation_font_color=t["warn"],
         )
     if high is not None and high != float("inf"):
         fig.add_hline(
             y=high,
             line_dash="dash",
-            line_color=COLORS["warn"],
+            line_color=t["warn"],
             annotation_text=f"p99 ({high:.1f})",
-            annotation_position="top right"
+            annotation_position="top right",
+            annotation_font_color=t["warn"],
         )
 
     # Anomaly markers
@@ -90,29 +110,30 @@ def create_timeseries_figure(
             y=alert_vals,
             mode="markers",
             name="Anomaly",
-            marker={"color": COLORS["critical"], "size": 8, "symbol": "circle-open", "line": {"width": 2}},
+            marker={"color": t["critical"], "size": 8, "symbol": "circle-open", "line": {"width": 2}},
             text=alert_texts,
             hoverinfo="x+y+text"
         ))
 
     fig.update_layout(
-        template="plotly_dark" if theme == "dark" else "plotly_white",
+        template="plotly_white" if theme == "light" else "plotly_dark",
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         margin={"l": 40, "r": 20, "t": 30, "b": 40},
-        xaxis={"showgrid": True, "gridcolor": COLORS["border"]},
-        yaxis={"showgrid": True, "gridcolor": COLORS["border"]},
-        legend={"orientation": "h", "y": 1.1, "x": 0.0},
-        font={"family": "Inter, sans-serif", "color": COLORS["text"]},
+        xaxis={"showgrid": True, "gridcolor": t["border"], "tickfont": {"color": t["text_muted"]}},
+        yaxis={"showgrid": True, "gridcolor": t["border"], "tickfont": {"color": t["text_muted"]}},
+        legend={"orientation": "h", "y": 1.1, "x": 0.0, "font": {"color": t["text"]}},
+        font={"family": "Inter, sans-serif", "color": t["text"]},
     )
     return fig
 
 def create_benchmark_figure(benchmark_results: List[Dict[str, Any]], theme: str = "dark") -> go.Figure:
-    """Grouped bar chart showing mean latency by query and condition (TECHNICAL §5.10)."""
+    """Grouped bar chart showing mean latency by query and condition per DESIGN.md §3."""
+    t = LIGHT_TOKENS if theme == "light" else DARK_TOKENS
     fig = go.Figure()
     if not benchmark_results:
         fig.update_layout(
-            template="plotly_dark" if theme == "dark" else "plotly_white",
+            template="plotly_white" if theme == "light" else "plotly_dark",
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             annotations=[{
@@ -120,7 +141,7 @@ def create_benchmark_figure(benchmark_results: List[Dict[str, Any]], theme: str 
                 "xref": "paper",
                 "yref": "paper",
                 "showarrow": False,
-                "font": {"size": 14, "color": COLORS["text_muted"]}
+                "font": {"size": 14, "color": t["text_muted"]}
             }]
         )
         return fig
@@ -129,10 +150,10 @@ def create_benchmark_figure(benchmark_results: List[Dict[str, Any]], theme: str 
     conditions = df["condition"].unique()
 
     color_map = {
-        "C1_no_index": "#F87171",
-        "C2_index_no_cache": "#FBBF24",
-        "C3_index_cache_miss": "#60A5FA",
-        "C4_index_cache_hit": "#34D399",
+        "C1_no_index": t["critical"],
+        "C2_index_no_cache": t["warn"],
+        "C3_index_cache_miss": t["info"],
+        "C4_index_cache_hit": t["ok"],
     }
 
     for cond in conditions:
@@ -141,20 +162,20 @@ def create_benchmark_figure(benchmark_results: List[Dict[str, Any]], theme: str 
             name=cond,
             x=sub_df["query"],
             y=sub_df["mean_ms"],
-            marker_color=color_map.get(cond, COLORS["primary"]),
+            marker_color=color_map.get(cond, t["primary"]),
             text=[f"{v:.2f} ms" for v in sub_df["mean_ms"]],
             textposition="auto",
         ))
 
     fig.update_layout(
         barmode="group",
-        template="plotly_dark" if theme == "dark" else "plotly_white",
+        template="plotly_white" if theme == "light" else "plotly_dark",
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         margin={"l": 40, "r": 20, "t": 30, "b": 40},
-        xaxis={"title": "Query Type", "gridcolor": COLORS["border"]},
-        yaxis={"title": "Mean Execution Time (ms)", "gridcolor": COLORS["border"]},
-        legend={"orientation": "h", "y": 1.15, "x": 0.0},
-        font={"family": "Inter, sans-serif", "color": COLORS["text"]},
+        xaxis={"title": "Query Type", "gridcolor": t["border"], "tickfont": {"color": t["text_muted"]}},
+        yaxis={"title": "Mean Execution Time (ms)", "gridcolor": t["border"], "tickfont": {"color": t["text_muted"]}},
+        legend={"orientation": "h", "y": 1.15, "x": 0.0, "font": {"color": t["text"]}},
+        font={"family": "Inter, sans-serif", "color": t["text"]},
     )
     return fig

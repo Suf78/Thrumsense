@@ -32,8 +32,6 @@ env/
 .env.*.local
 
 # Datasets and benchmark outputs (AGENTS.md rule 10)
-# Ignore the data folder contents but keep the placeholder so the folder
-# exists in git after a fresh clone (allows 'python -m app.ingest' to work).
 data/*.csv
 data/*.xlsx
 data/*.zip
@@ -85,3 +83,10 @@ logs/
 *.tmp
 *.bak
 *.orig
+
+# Ignore project documentation MD files (keep README.md only)
+AGENTS.md
+DESIGN.md
+PRD.md
+SKILLS.md
+TECHNICAL.md
