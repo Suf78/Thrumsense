@@ -6,14 +6,12 @@
 **Mentor:** _to be added_
 
 ## 👥 Team
-| Name | Suggested ownership |
+| Name | Ownership |
 |---|---|
 | Akshaya R | Ingestion, data model, MongoDB indexes |
 | Bibi Sufiya Shariff | Detection engine, alerts, health score |
 | Pooja G | Dashboard UI/UX, theming, charts |
 | Likhitha Devan M | Redis caching, replay engine, benchmark lab, docs |
-
-(Ownership is a suggestion — adjust freely.)
 
 ---
 
