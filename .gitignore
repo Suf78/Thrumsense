@@ -1,0 +1,87 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+
+# Datasets and benchmark outputs (AGENTS.md rule 10)
+# Ignore the data folder contents but keep the placeholder so the folder
+# exists in git after a fresh clone (allows 'python -m app.ingest' to work).
+data/*.csv
+data/*.xlsx
+data/*.zip
+data/scaled_*.csv
+data/benchmark_*.csv
+!data/.gitkeep
+
+# Benchmark result dumps (generated at runtime, not source of truth)
+benchmark_dumps/
+*.dump
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.cover
+
+# Type-checkers & linters
+.mypy_cache/
+.ruff_cache/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# Redis dump files (created by Redis in the working directory)
+dump.rdb
+appendonly.aof
+
+# Docker volumes & compose overrides
+docker-compose.override.yml
+mongo_data/
+
+# Logs
+*.log
+logs/
+
+# Temp / scratch
+*.tmp
+*.bak
+*.orig

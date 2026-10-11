@@ -1,0 +1,20 @@
+defaults:
+  method: percentile
+  low_pct: 1.0
+  high_pct: 99.0
+
+adaptive:
+  window_hours: 24
+  z_limit: 3.5
+
+fault:
+  dropout_hours: 3
+  flatline_hours: 4
+
+health:
+  missing_weight: 40.0
+  alert_weight: 40.0
+  flatline_penalty: 20.0
+  alert_ratio_k: 10.0
+
+overrides: {}

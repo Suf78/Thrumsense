@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap');
+
+/* Dark theme default tokens (DESIGN.md §3) */
+:root, [data-theme="dark"] {
+  --bg: #0B1220;
+  --surface: #111A2E;
+  --surface-2: #16223B;
+  --border: #22304F;
+  --text: #E6EDF7;
+  --text-muted: #8FA1BF;
+  --primary: #2DD4BF;
+  --accent: #818CF8;
+  --ok: #34D399;
+  --warn: #FBBF24;
+  --critical: #F87171;
+  --info: #60A5FA;
+  
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+[data-theme="light"] {
+  --bg: #F4F7FB;
+  --surface: #FFFFFF;
+  --surface-2: #EEF2F9;
+  --border: #D9E1EF;
+  --text: #0F172A;
+  --text-muted: #5B6B88;
+  --primary: #0D9488;
+  --accent: #4F46E5;
+  --ok: #059669;
+  --warn: #B45309;
+  --critical: #DC2626;
+  --info: #2563EB;
+}
+
+body {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.mono-text {
+  font-family: var(--font-mono);
+}
+
+/* Bento card surfaces per DESIGN.md §2 */
+.bento-card {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px;
+  padding: 16px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.bento-card:hover {
+  background-color: var(--surface-2) !important;
+}
+
+/* KPI numbers */
+.kpi-value {
+  font-family: var(--font-mono);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Status dots and live animation */
+.live-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: var(--ok);
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .live-dot.pulsing {
+    animation: pulse 2s infinite ease-in-out;
+  }
+}
+
+/* Full dropdown custom styling strictly matching DESIGN.md */
+.dash-dropdown .Select-control {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.dash-dropdown .Select-value-label,
+.dash-dropdown .Select--single > .Select-control .Select-value {
+  color: var(--text) !important;
+  font-weight: 500 !important;
+}
+
+.dash-dropdown .Select-placeholder {
+  color: var(--text-muted) !important;
+}
+
+.dash-dropdown .Select-menu-outer {
+  background-color: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+  z-index: 9999 !important;
+}
+
+.dash-dropdown .Select-option {
+  background-color: var(--surface-2) !important;
+  color: var(--text) !important;
+  padding: 8px 12px !important;
+}
+
+.dash-dropdown .Select-option.is-focused,
+.dash-dropdown .Select-option:hover {
+  background-color: var(--surface) !important;
+  color: var(--primary) !important;
+}
+
+.dash-dropdown .Select-option.is-selected {
+  background-color: var(--surface) !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+/* Tabs styling adhering to tokens */
+.nav-tabs {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.nav-tabs .nav-link {
+  color: var(--text-muted) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  font-weight: 600;
+  font-family: var(--font-heading);
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--primary) !important;
+  background-color: var(--surface) !important;
+  border-color: var(--border) var(--border) var(--surface) !important;
+}
+
+/* Badges */
+.badge-ok { background-color: rgba(52, 211, 153, 0.15) !important; color: var(--ok) !important; border: 1px solid var(--ok) !important; }
+.badge-warn { background-color: rgba(251, 191, 36, 0.15) !important; color: var(--warn) !important; border: 1px solid var(--warn) !important; }
+.badge-critical { background-color: rgba(248, 113, 113, 0.15) !important; color: var(--critical) !important; border: 1px solid var(--critical) !important; }
+
+/* Control buttons conforming to calm control room aesthetic */
+.btn-control {
+  background-color: var(--surface-2) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+.btn-control:hover, .btn-control:active {
+  background-color: var(--surface) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
