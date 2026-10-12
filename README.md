@@ -53,8 +53,6 @@ IoT sensors emit constant streams. Manual monitoring is slow, failures go unnoti
 | L5 | `services.py` | UI-facing functions |
 | L6 | Dash app | Visualisation and controls |
 
-Full details: [TECHNICAL.md](TECHNICAL.md). Requirements: [PRD.md](PRD.md). Look & feel: [DESIGN.md](DESIGN.md).
-
 ## 5. Tech stack
 Python 3.11+ · MongoDB 7 · Redis 7 · Plotly Dash + dash-bootstrap-components · pandas/numpy · PyMongo · redis-py · PyYAML · pytest · Docker Compose.
 
@@ -175,6 +173,3 @@ MQTT live ingestion · Cassandra comparison · ML detectors · Telegram/email al
 ## 14. References
 - De Vito, S. et al. (2008). *On field calibration of an electronic nose for benzene estimation in an urban pollution monitoring scenario.* Sensors and Actuators B. UCI ML Repository — Air Quality dataset. (Verify the full citation and URL before final submission.)
 - *IoT Sensor Monitoring Review II* presentation (project material).
-
-## 15. License
-For academic use. Add a license (e.g. MIT) if publishing the repo.
