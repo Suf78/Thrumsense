@@ -3,7 +3,7 @@
 > A NoSQL-backed monitoring prototype that stores sensor readings in MongoDB, detects anomalies **and broken sensors**, caches hot data in Redis, and shows everything on a dark/light Plotly Dash dashboard, with a built-in **replay engine** and **Benchmark Lab**.
 
 **Course:** Microproject (E1CSA 363) · **Institution:** Alliance School of Advanced Computing, Alliance University · **Batch:** 2024–2028 · **Review:** II
-**Mentor:** _to be added_
+**Mentor:** Dr. Subrata Pain
 
 ## 👥 Team
 | Name | Ownership |
